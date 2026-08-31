@@ -65,4 +65,4 @@ frontendService:
   targetPort: 80
   nodePort: 30080
 image:
-  tag: v2.0.2
+  tag: v2.0.3
