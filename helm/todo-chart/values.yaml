@@ -48,10 +48,6 @@ postgresService:
   port: 5432
   targetPort: 5432
 frontend:
-  test:
-    imageUpdater:
-      repository: volkandemirors/todo-frontend
-      tag: "v2.0.3"
   replicas: 1
   image:
     repository: volkandemirors/todo-frontend
