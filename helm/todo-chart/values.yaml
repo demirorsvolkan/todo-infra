@@ -1,14 +1,11 @@
 namespace: todo-app
-
 config:
   POSTGRES_DB: todo
   POSTGRES_USER: todo_user
   POSTGRES_HOST: postgres
   POSTGRES_PORT: "5432"
-
 secret:
   POSTGRES_PASSWORD: todo_password
-
 backend:
   replicas: 1
   image:
@@ -22,11 +19,9 @@ backend:
     limits:
       cpu: "400m"
       memory: "512Mi"
-
 backendService:
   port: 8080
   targetPort: 8080
-
 postgres:
   image:
     repository: postgres
@@ -42,20 +37,16 @@ postgres:
     limits:
       cpu: "1000m"
       memory: "1Gi"
-
 postgresPvc:
   storage: 1Gi
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   storageClassName: manual
-
 postgresDeployment:
   replicas: 1
-
 postgresService:
   port: 5432
   targetPort: 5432
-
 frontend:
   test:
     imageUpdater:
@@ -64,7 +55,7 @@ frontend:
   replicas: 1
   image:
     repository: volkandemirors/todo-frontend
-    tag: "v2.0.3"
+    tag: "v2.0.4"
   port: 80
   resources:
     requests:
@@ -73,7 +64,6 @@ frontend:
     limits:
       cpu: "200m"
       memory: "256Mi"
-
 frontendService:
   port: 80
   targetPort: 80
