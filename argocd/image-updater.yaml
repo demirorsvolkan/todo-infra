@@ -9,7 +9,7 @@ spec:
     - namePattern: todo-app
       images:
         - alias: backend
-          imageName: volkandemirors/todo-backend
+          imageName: imageName: volkandemirors/todo-backend:v1.0.0
           commonUpdateSettings:
             updateStrategy: semver
             allowTags: "regexp:^v?[0-9]+\\.[0-9]+\\.[0-9]+$"
@@ -19,7 +19,7 @@ spec:
               tag: backend.image.tag
 
         - alias: frontend
-          imageName: volkandemirors/todo-frontend
+          imageName: imageName: volkandemirors/todo-frontend:v2.0.3
           commonUpdateSettings:
             updateStrategy: semver
             allowTags: "regexp:^v?[0-9]+\\.[0-9]+\\.[0-9]+$"
