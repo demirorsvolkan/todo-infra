@@ -51,7 +51,7 @@ frontend:
   replicas: 1
   image:
     repository: volkandemirors/todo-frontend
-    tag: "v2.0.5"
+    tag: "v2.0.6"
   port: 80
   resources:
     requests:
