@@ -10,7 +10,7 @@ backend:
   replicas: 1
   image:
     repository: volkandemirors/todo-backend
-    tag: "v1.0.0"
+    tag: "v1.1.0"
   port: 8080
   resources:
     requests:
