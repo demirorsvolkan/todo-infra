@@ -24,6 +24,15 @@ backend:
     minReplicas: 1
     maxReplicas: 5
     targetMemoryUtilizationPercentage: 70
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 0
+        percentValue: 100
+        periodSeconds: 60
+      scaleDown:
+        stabilizationWindowSeconds: 60
+        percentValue: 50
+        periodSeconds: 60
 backendService:
   port: 8080
   targetPort: 8080
@@ -70,6 +79,15 @@ frontend:
     minReplicas: 1
     maxReplicas: 5
     targetMemoryUtilizationPercentage: 70
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 0
+        percentValue: 100
+        periodSeconds: 60
+      scaleDown:
+        stabilizationWindowSeconds: 60
+        percentValue: 50
+        periodSeconds: 60
 frontendService:
   port: 80
   targetPort: 80

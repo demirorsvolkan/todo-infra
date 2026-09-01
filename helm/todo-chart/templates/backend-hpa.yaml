@@ -11,6 +11,23 @@ spec:
     name: backend
   minReplicas: {{ .Values.backend.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.backend.autoscaling.maxReplicas }}
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.backend.autoscaling.behavior.scaleUp.stabilizationWindowSeconds }}
+      policies:
+        - type: Percent
+          value: {{ .Values.backend.autoscaling.behavior.scaleUp.percentValue }}
+          periodSeconds: {{ .Values.backend.autoscaling.behavior.scaleUp.periodSeconds }}
+      selectPolicy: Max
+
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.backend.autoscaling.behavior.scaleDown.stabilizationWindowSeconds }}
+      policies:
+        - type: Percent
+          value: {{ .Values.backend.autoscaling.behavior.scaleDown.percentValue }}
+          periodSeconds: {{ .Values.backend.autoscaling.behavior.scaleDown.periodSeconds }}
+      selectPolicy: Max
+
   metrics:
     - type: Resource
       resource:
