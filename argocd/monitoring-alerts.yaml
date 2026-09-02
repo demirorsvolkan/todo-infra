@@ -12,8 +12,6 @@ spec:
     repoURL: https://github.com/demirorsvolkan/todo-infra.git
     targetRevision: main
     path: monitoring/alerts
-    directory:
-      recurse: false
 
   destination:
     server: https://kubernetes.default.svc
