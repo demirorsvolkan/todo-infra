@@ -19,7 +19,7 @@ spec:
                 namespace="todo-app",
                 container="backend"
               }
-              /
+              / on(namespace,pod,container)
               kube_pod_container_resource_limits{
                 namespace="todo-app",
                 container="backend",
@@ -42,7 +42,7 @@ spec:
                 namespace="todo-app",
                 container="backend"
               }
-              /
+              / on(namespace,pod,container)
               kube_pod_container_resource_limits{
                 namespace="todo-app",
                 container="backend",
@@ -65,7 +65,7 @@ spec:
                 namespace="todo-app",
                 container="backend"
               }
-              /
+              / on(namespace,pod,container)
               kube_pod_container_resource_limits{
                 namespace="todo-app",
                 container="backend",
@@ -73,7 +73,7 @@ spec:
                 unit="byte"
               }
             ) * 100 > 85
-          for: 5m
+          for: 2m
           labels:
             severity: critical
             component: backend
@@ -88,7 +88,7 @@ spec:
                 namespace="todo-app",
                 container="backend"
               }
-              /
+              / on(namespace,pod,container)
               kube_pod_container_resource_limits{
                 namespace="todo-app",
                 container="backend",
@@ -96,7 +96,7 @@ spec:
                 unit="byte"
               }
             ) * 100 > 95
-          for: 5m
+          for: 1m
           labels:
             severity: emergency
             component: backend
