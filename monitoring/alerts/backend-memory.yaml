@@ -1,4 +1,3 @@
-```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 
@@ -104,4 +103,3 @@ spec:
           annotations:
             summary: "Backend memory usage above 95%"
             description: "Backend pod {{ $labels.pod }} is using more than 95% of its memory limit."
-```
