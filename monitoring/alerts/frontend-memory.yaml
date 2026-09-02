@@ -5,7 +5,7 @@ metadata:
   name: frontend-memory-alerts
   namespace: monitoring
   labels:
-    release: prometheus-kube-prometheus
+    release: prometheus
 
 spec:
   groups:
