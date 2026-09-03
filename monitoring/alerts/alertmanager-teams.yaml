@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
   name: teams-alerts
-  namespace: monitoring
+  namespace: todo-app
   labels:
     alertmanagerConfig: teams
 spec:
