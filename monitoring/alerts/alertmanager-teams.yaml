@@ -29,12 +29,12 @@ spec:
 
           text: |
             **Durum:** {{ .Status | toUpper }}
-            **Severity:** {{ .CommonLabels.severity }}
+            **Severity:** {{ range .Alerts }}{{ .Labels.severity }}{{ end }}
 
-            **Servis:** {{ .CommonLabels.component }}
-            **Namespace:** {{ .CommonLabels.namespace }}
-            **Pod:** {{ .CommonLabels.pod }}
+            **Servis:** {{ range .Alerts }}{{ .Labels.component }}{{ end }}
+            **Namespace:** {{ range .Alerts }}{{ .Labels.namespace }}{{ end }}
+            **Pod:** {{ range .Alerts }}{{ .Labels.pod }}{{ end }}
 
-            **Açıklama:** {{ .CommonAnnotations.description }}
+            **Açıklama:** {{ range .Alerts }}{{ .Annotations.description }}{{ end }}
 
           sendResolved: true
