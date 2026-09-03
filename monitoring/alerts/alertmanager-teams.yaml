@@ -12,7 +12,9 @@ spec:
     receiver: teams-webhook
 
     matchers:
-      - alert_source = "todo-app"
+      - name: alert_source
+        value: todo-app
+        matchType: "="
 
     groupBy:
       - alertname
