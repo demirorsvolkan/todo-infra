@@ -26,7 +26,20 @@ spec:
                 resource="memory",
                 unit="byte"
               }
-            ) * 100 > 65
+            ) * 100 > 65 and
+            (
+              container_memory_working_set_bytes{
+                namespace="todo-app",
+                container="backend"
+              }
+              / on(namespace,pod,container)
+              kube_pod_container_resource_limits{
+                namespace="todo-app",
+                container="backend",
+                resource="memory",
+                unit="byte"
+              }
+            ) * 100 <= 75
           for: 5m
           labels:
             severity: notice
@@ -49,7 +62,20 @@ spec:
                 resource="memory",
                 unit="byte"
               }
-            ) * 100 > 75
+            ) * 100 > 75 and
+            (
+              container_memory_working_set_bytes{
+                namespace="todo-app",
+                container="backend"
+              }
+              / on(namespace,pod,container)
+              kube_pod_container_resource_limits{
+                namespace="todo-app",
+                container="backend",
+                resource="memory",
+                unit="byte"
+              }
+            ) * 100 <= 85
           for: 5m
           labels:
             severity: warning
@@ -72,7 +98,20 @@ spec:
                 resource="memory",
                 unit="byte"
               }
-            ) * 100 > 85
+            ) * 100 > 85 and
+            (
+              container_memory_working_set_bytes{
+                namespace="todo-app",
+                container="backend"
+              }
+              / on(namespace,pod,container)
+              kube_pod_container_resource_limits{
+                namespace="todo-app",
+                container="backend",
+                resource="memory",
+                unit="byte"
+              }
+            ) * 100 <= 95
           for: 2m
           labels:
             severity: critical

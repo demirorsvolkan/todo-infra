@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: teams-alerts
+  namespace: monitoring
+  labels:
+    alertmanagerConfig: teams
+spec:
+  route:
+    receiver: teams-webhook
+    groupBy:
+      - alertname
+      - namespace
+      - component
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 12h
+
+  receivers:
+    - name: teams-webhook
+      msteamsv2Configs:
+        - webhookURL:
+            name: teams-webhook
+            key: webhook-url
+          sendResolved: true
