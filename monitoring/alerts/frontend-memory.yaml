@@ -44,6 +44,7 @@ spec:
           labels:
             severity: notice
             component: frontend
+            alert_source: todo-app
           annotations:
             summary: "Frontend memory usage above 65%"
             description: "Frontend pod {{ $labels.pod }} is using more than 65% of its memory limit."
@@ -80,6 +81,7 @@ spec:
           labels:
             severity: warning
             component: frontend
+            alert_source: todo-app
           annotations:
             summary: "Frontend memory usage above 75%"
             description: "Frontend pod {{ $labels.pod }} is using more than 75% of its memory limit."
@@ -116,6 +118,7 @@ spec:
           labels:
             severity: critical
             component: frontend
+            alert_source: todo-app
           annotations:
             summary: "Frontend memory usage above 85%"
             description: "Frontend pod {{ $labels.pod }} is using more than 85% of its memory limit."
@@ -139,6 +142,7 @@ spec:
           labels:
             severity: emergency
             component: frontend
+            alert_source: todo-app
           annotations:
             summary: "Frontend memory usage above 95%"
             description: "Frontend pod {{ $labels.pod }} is using more than 95% of its memory limit."
