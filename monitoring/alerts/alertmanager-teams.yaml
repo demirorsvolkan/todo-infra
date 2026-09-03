@@ -11,6 +11,9 @@ spec:
   route:
     receiver: teams-webhook
 
+    matchers:
+      - alert_source = "todo-app"
+
     groupBy:
       - alertname
       - namespace
