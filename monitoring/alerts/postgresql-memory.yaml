@@ -47,7 +47,8 @@ spec:
             alert_source: todo-app
           annotations:
             summary: "PostgreSQL memory usage above 65%"
-            description: "PostgreSQL pod {{ $labels.pod }} is using more than 65% of its memory limit."
+            description: "PostgreSQL memory usage exceeded 65% of its memory limit."
+            memory_usage: '{{ printf "%.1f" $value }}%'
 
         - alert: PostgreSQLMemoryWarning
           expr: |
@@ -84,7 +85,8 @@ spec:
             alert_source: todo-app
           annotations:
             summary: "PostgreSQL memory usage above 75%"
-            description: "PostgreSQL pod {{ $labels.pod }} is using more than 75% of its memory limit."
+            description: "PostgreSQL memory usage exceeded 75% of its memory limit."
+            memory_usage: '{{ printf "%.1f" $value }}%'
 
         - alert: PostgreSQLMemoryCritical
           expr: |
@@ -121,7 +123,8 @@ spec:
             alert_source: todo-app
           annotations:
             summary: "PostgreSQL memory usage above 85%"
-            description: "PostgreSQL pod {{ $labels.pod }} is using more than 85% of its memory limit."
+            description: "PostgreSQL memory usage exceeded 85% of its memory limit."
+            memory_usage: '{{ printf "%.1f" $value }}%'
 
         - alert: PostgreSQLMemoryEmergency
           expr: |
@@ -145,4 +148,5 @@ spec:
             alert_source: todo-app
           annotations:
             summary: "PostgreSQL memory usage above 95%"
-            description: "PostgreSQL pod {{ $labels.pod }} is using more than 95% of its memory limit."
+            description: "PostgreSQL memory usage exceeded 95% of its memory limit."
+            memory_usage: '{{ printf "%.1f" $value }}%'

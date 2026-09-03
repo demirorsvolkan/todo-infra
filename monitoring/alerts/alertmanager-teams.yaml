@@ -1,26 +1,21 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
-
 metadata:
   name: teams-alerts
   namespace: todo-app
   labels:
     alertmanagerConfig: teams
-
 spec:
   route:
     receiver: teams-webhook
-
     matchers:
       - name: alert_source
         value: todo-app
         matchType: "="
-
     groupBy:
       - alertname
       - namespace
       - component
-
     groupWait: 30s
     groupInterval: 5m
     repeatInterval: 12h
@@ -32,18 +27,35 @@ spec:
             name: teams-webhook
             key: webhook-url
 
-          title: '{{ if eq .Status "firing" }}🚨 {{ .CommonLabels.alertname }}{{ else }}✅ {{ .CommonLabels.alertname }} Recovered{{ end }}'
+          title: >-
+            {{ if gt (len .Alerts.Firing) 0 }}
+            🚨 {{ .CommonLabels.alertname }}
+            {{ else }}
+            ✅ {{ .CommonLabels.alertname }} Recovered
+            {{ end }}
 
           text: |
             **Durum:** {{ .Status | toUpper }}
-
             **Severity:** {{ .CommonLabels.severity }}
             **Servis:** {{ .CommonLabels.component }}
             **Namespace:** {{ .CommonLabels.namespace }}
 
-            **Etkilenen Podlar:**
-            {{ range .Alerts }}
-            • {{ .Labels.pod }}
+            {{ if gt (len .Alerts.Firing) 0 }}
+            **Aktif Podlar:**
+            {{ range .Alerts.Firing }}
+            • {{ .Labels.pod }} → **{{ .Annotations.memory_usage }}**
+              Başlangıç: {{ .StartsAt.Format "02.01.2006 15:04:05" }}
+            {{ end }}
+            {{ end }}
+
+            {{ if gt (len .Alerts.Resolved) 0 }}
+            **Çözülen Podlar:**
+            {{ range .Alerts.Resolved }}
+            • {{ .Labels.pod }} → son değer **{{ .Annotations.memory_usage }}**
+              Başlangıç: {{ .StartsAt.Format "02.01.2006 15:04:05" }}
+              Çözülme: {{ .EndsAt.Format "02.01.2006 15:04:05" }}
+              Süre: **{{ humanizeDuration (.EndsAt.Sub .StartsAt) }}**
+            {{ end }}
             {{ end }}
 
             **Özet:** {{ .CommonAnnotations.summary }}
