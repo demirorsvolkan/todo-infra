@@ -29,15 +29,19 @@ spec:
 
           text: |
             **Durum:** {{ .Status | toUpper }}
-            **Severity:** {{ range .Alerts }}{{ .Labels.severity }}{{ end }}
 
-            **Servis:** {{ range .Alerts }}{{ .Labels.component }}{{ end }}
-            **Namespace:** {{ range .Alerts }}{{ .Labels.namespace }}{{ end }}
-            **Pod:** {{ range .Alerts }}{{ .Labels.pod }}{{ end }}
+            {{ range .Alerts }}
+            **Severity:** {{ .Labels.severity }}
+            **Servis:** {{ .Labels.component }}
+            **Namespace:** {{ .Labels.namespace }}
+            **Pod:** {{ .Labels.pod }}
 
             **Memory Usage:** Above 85%
             **Threshold:** 85%
 
-            **Açıklama:** {{ range .Alerts }}{{ .Annotations.description }}{{ end }}
+            **Açıklama:** {{ .Annotations.description }}
+
+            ---
+            {{ end }}
 
           sendResolved: true
