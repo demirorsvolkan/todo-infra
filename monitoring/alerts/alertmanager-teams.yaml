@@ -31,35 +31,34 @@ spec:
             {{ if gt (len .Alerts.Firing) 0 }}
             🚨 {{ .CommonLabels.alertname }}
             {{ else }}
-            ✅ {{ .CommonLabels.alertname }} Recovered
+            ✅ {{ .CommonLabels.alertname }} Resolved
             {{ end }}
 
           text: |
-            **Durum:** {{ .Status | toUpper }}
+            **State:** {{ .Status | toUpper }}
             **Severity:** {{ .CommonLabels.severity }}
             **Servis:** {{ .CommonLabels.component }}
             **Namespace:** {{ .CommonLabels.namespace }}
 
             {{ if gt (len .Alerts.Firing) 0 }}
-            **Aktif Podlar:**
+            **Active Pods:**
             {{ range .Alerts.Firing }}
-            • {{ .Labels.pod }} → **{{ .Annotations.memory_usage }}**
-              Başlangıç: {{ .StartsAt.Format "02.01.2006 15:04:05" }}
+            **▶** {{ .Labels.pod }} → **{{ .Annotations.memory_usage }}**
+              S: {{ .StartsAt.Format "02.01.2006 15:04:05" }}
             {{ end }}
             {{ end }}
 
             {{ if gt (len .Alerts.Resolved) 0 }}
-            **Çözülen Podlar:**
+            **Resolved Pods:**
             {{ range .Alerts.Resolved }}
-            • {{ .Labels.pod }} → son değer **{{ .Annotations.memory_usage }}**
-              Başlangıç: {{ .StartsAt.Format "02.01.2006 15:04:05" }}
-              Çözülme: {{ .EndsAt.Format "02.01.2006 15:04:05" }}
-              Süre: **{{ humanizeDuration (.EndsAt.Sub .StartsAt) }}**
+            **▶** {{ .Labels.pod }}
+              S: {{ .StartsAt.Format "02.01.2006 15:04:05" }} - R: {{ .EndsAt.Format "02.01.2006 15:04:05" }}
+              Time: **{{ humanizeDuration (.EndsAt.Sub .StartsAt) }}**
             {{ end }}
             {{ end }}
 
-            **Özet:** {{ .CommonAnnotations.summary }}
+            **Summary:** {{ .CommonAnnotations.summary }}
 
-            **Açıklama:** {{ .CommonAnnotations.description }}
+            **Description:** {{ .CommonAnnotations.description }}
 
           sendResolved: true
