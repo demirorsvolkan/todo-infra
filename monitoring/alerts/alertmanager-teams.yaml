@@ -1,10 +1,12 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
+
 metadata:
   name: teams-alerts
   namespace: todo-app
   labels:
     alertmanagerConfig: teams
+
 spec:
   route:
     receiver: teams-webhook
@@ -22,4 +24,17 @@ spec:
         - webhookURL:
             name: teams-webhook
             key: webhook-url
+
+          title: '🚨 {{ .CommonLabels.alertname }}'
+
+          text: |
+            **Durum:** {{ .Status | toUpper }}
+            **Severity:** {{ .CommonLabels.severity }}
+
+            **Servis:** {{ .CommonLabels.component }}
+            **Namespace:** {{ .CommonLabels.namespace }}
+            **Pod:** {{ .CommonLabels.pod }}
+
+            **Açıklama:** {{ .CommonAnnotations.description }}
+
           sendResolved: true
