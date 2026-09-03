@@ -52,8 +52,9 @@ spec:
             **Resolved Pods:**
             {{ range .Alerts.Resolved }}
             **▶** {{ .Labels.pod }}
-              S: {{ .StartsAt.Format "02.01.2006 15:04:05" }} - R: {{ .EndsAt.Format "02.01.2006 15:04:05" }}
-              Time: **{{ humanizeDuration (.EndsAt.Sub .StartsAt) }}**
+                - S: {{ .StartsAt.Format "02.01.2006 15:04:05" }} - R: {{ .EndsAt.Format "02.01.2006 15:04:05" }}
+                - Time: **{{ humanizeDuration (.EndsAt.Sub .StartsAt) }}**
+                
             {{ end }}
             {{ end }}
 
