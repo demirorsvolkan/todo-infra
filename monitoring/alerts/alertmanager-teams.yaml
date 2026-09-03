@@ -35,6 +35,9 @@ spec:
             **Namespace:** {{ range .Alerts }}{{ .Labels.namespace }}{{ end }}
             **Pod:** {{ range .Alerts }}{{ .Labels.pod }}{{ end }}
 
+            **Memory Usage:** Above 85%
+            **Threshold:** 85%
+
             **Açıklama:** {{ range .Alerts }}{{ .Annotations.description }}{{ end }}
 
           sendResolved: true
