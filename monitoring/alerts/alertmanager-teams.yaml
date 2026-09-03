@@ -10,10 +10,12 @@ metadata:
 spec:
   route:
     receiver: teams-webhook
+
     groupBy:
       - alertname
       - namespace
       - component
+
     groupWait: 30s
     groupInterval: 5m
     repeatInterval: 12h
@@ -25,23 +27,22 @@ spec:
             name: teams-webhook
             key: webhook-url
 
-          title: '🚨 {{ .CommonLabels.alertname }}'
+          title: '{{ if eq .Status "firing" }}🚨 {{ .CommonLabels.alertname }}{{ else }}✅ {{ .CommonLabels.alertname }} Recovered{{ end }}'
 
           text: |
             **Durum:** {{ .Status | toUpper }}
 
+            **Severity:** {{ .CommonLabels.severity }}
+            **Servis:** {{ .CommonLabels.component }}
+            **Namespace:** {{ .CommonLabels.namespace }}
+
+            **Etkilenen Podlar:**
             {{ range .Alerts }}
-            **Severity:** {{ .Labels.severity }}
-            **Servis:** {{ .Labels.component }}
-            **Namespace:** {{ .Labels.namespace }}
-            **Pod:** {{ .Labels.pod }}
-
-            **Memory Usage:** Above 85%
-            **Threshold:** 85%
-
-            **Açıklama:** {{ .Annotations.description }}
-
-            ---
+            • {{ .Labels.pod }}
             {{ end }}
+
+            **Özet:** {{ .CommonAnnotations.summary }}
+
+            **Açıklama:** {{ .CommonAnnotations.description }}
 
           sendResolved: true
