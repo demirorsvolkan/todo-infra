@@ -17,6 +17,9 @@ spec:
       values: |
         grafana:
           enabled: true
+          service:
+            type: NodePort
+            nodePort: 30300
           persistence:
             enabled: true
             size: 2Gi
@@ -24,6 +27,9 @@ spec:
               - ReadWriteOnce
 
         prometheus:
+          service:
+            type: NodePort
+            nodePort: 30090
           prometheusSpec:
             retention: 7d
             storageSpec:
@@ -36,6 +42,9 @@ spec:
                       storage: 8Gi
 
         alertmanager:
+          service:
+            type: NodePort
+            nodePort: 30093
           alertmanagerSpec:
             storage:
               volumeClaimTemplate:
