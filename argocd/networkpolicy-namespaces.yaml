@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: np-allow
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: np-deny
