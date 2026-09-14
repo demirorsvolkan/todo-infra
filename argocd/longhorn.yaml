@@ -17,6 +17,14 @@ spec:
             defaultClassReplicaCount: 2
             volumeBindingMode: WaitForFirstConsumer
 
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+              effect: NoSchedule
+
+          defaultSettings:
+            taintToleration: "node-role.kubernetes.io/control-plane:NoSchedule"
+
           preUpgradeChecker:
             jobEnabled: false
 
