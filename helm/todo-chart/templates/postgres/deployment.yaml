@@ -42,6 +42,8 @@ spec:
                   key: POSTGRES_USER
 
             - name: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
               valueFrom:
                 secretKeyRef:
                   name: todo-secret
