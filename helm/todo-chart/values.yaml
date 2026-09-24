@@ -51,6 +51,9 @@ postgres:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+postgresBackup:
+  enabled: true
+  storage: 1Gi
 postgresPvc:
   storage: 1Gi
   accessModes:
