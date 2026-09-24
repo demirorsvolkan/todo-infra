@@ -80,6 +80,17 @@ spec:
                   echo "Backup completed successfully."
                   ls -lh "${BACKUP_FILE}"
 
+                  echo "Cleaning old backups..."
+
+                  BACKUP_COUNT=5
+
+                  ls -1t /backup/todo-*.sql 2>/dev/null \
+                    | tail -n +$((BACKUP_COUNT + 1)) \
+                    | xargs -r rm -f
+
+                  echo "Remaining backups:"
+                  ls -lh /backup/todo-*.sql 2>/dev/null || true
+
               volumeMounts:
                 - name: backup-storage
                   mountPath: /backup
