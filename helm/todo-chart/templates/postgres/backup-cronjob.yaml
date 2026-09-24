@@ -82,7 +82,7 @@ spec:
 
                   echo "Cleaning old backups..."
 
-                  BACKUP_COUNT=5
+                  BACKUP_COUNT={{ .Values.postgresBackup.retention.count }}
 
                   ls -1t /backup/todo-*.sql 2>/dev/null \
                     | tail -n +$((BACKUP_COUNT + 1)) \

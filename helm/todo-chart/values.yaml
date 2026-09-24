@@ -56,6 +56,9 @@ postgresBackup:
   schedule: "0 */6 * * *"
   storage: 1Gi
 
+  retention:
+    count: 5
+
   image:
     repository: postgres
     tag: "16"
