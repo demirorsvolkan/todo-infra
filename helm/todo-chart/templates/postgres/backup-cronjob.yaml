@@ -1,0 +1,91 @@
+{{- if .Values.postgresBackup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: {{ .Values.namespace }}
+
+spec:
+  schedule: {{ .Values.postgresBackup.schedule | quote }}
+
+  successfulJobsHistoryLimit: {{ .Values.postgresBackup.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.postgresBackup.failedJobsHistoryLimit }}
+
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: postgres-backup
+
+        spec:
+          restartPolicy: OnFailure
+
+          containers:
+            - name: postgres-backup
+              image: "{{ .Values.postgresBackup.image.repository }}:{{ .Values.postgresBackup.image.tag }}"
+
+              env:
+                - name: POSTGRES_DB
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-config
+                      key: POSTGRES_DB
+
+                - name: POSTGRES_USER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-config
+                      key: POSTGRES_USER
+
+                - name: POSTGRES_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-config
+                      key: POSTGRES_HOST
+
+                - name: POSTGRES_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-config
+                      key: POSTGRES_PORT
+
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: todo-secret
+                      key: POSTGRES_PASSWORD
+
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -eu
+
+                  TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+                  BACKUP_FILE="/backup/todo-${TIMESTAMP}.sql"
+
+                  echo "Starting PostgreSQL backup..."
+                  echo "Database: ${POSTGRES_DB}"
+                  echo "Host: ${POSTGRES_HOST}:${POSTGRES_PORT}"
+                  echo "File: ${BACKUP_FILE}"
+
+                  pg_dump \
+                    -h "${POSTGRES_HOST}" \
+                    -p "${POSTGRES_PORT}" \
+                    -U "${POSTGRES_USER}" \
+                    -d "${POSTGRES_DB}" \
+                    -f "${BACKUP_FILE}"
+
+                  echo "Backup completed successfully."
+                  ls -lh "${BACKUP_FILE}"
+
+              volumeMounts:
+                - name: backup-storage
+                  mountPath: /backup
+
+          volumes:
+            - name: backup-storage
+              persistentVolumeClaim:
+                claimName: postgres-backup-pvc
+{{- end }}

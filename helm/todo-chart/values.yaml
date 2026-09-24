@@ -53,7 +53,15 @@ postgres:
       memory: "1Gi"
 postgresBackup:
   enabled: true
+  schedule: "0 */6 * * *"
   storage: 1Gi
+
+  image:
+    repository: postgres
+    tag: "16"
+
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
 postgresPvc:
   storage: 1Gi
   accessModes:
