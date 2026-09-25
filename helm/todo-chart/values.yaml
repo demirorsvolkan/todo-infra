@@ -106,3 +106,16 @@ frontendService:
   port: 80
   targetPort: 80
   nodePort: 30080
+
+
+priorityClass:
+  enabled: true
+  name: todo-app-priority
+  value: 100000
+  globalDefault: false
+  description: "Priority class for Todo App workloads"
+
+pdb:
+  backend:
+    enabled: true
+    minAvailable: 1
